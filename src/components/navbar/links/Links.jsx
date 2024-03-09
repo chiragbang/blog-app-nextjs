@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
+import styles from './links.module.css'
+import NavLink from './navLink/navLink'
 
 const Links = () => {
     const links = [
@@ -19,14 +21,28 @@ const Links = () => {
             title: "Blog",
             path: "/blog",
         }
-]
-  return (
-    <div>
-        {links.map((link=>(
-            <Link href={link.path} key={link.title}>{link.title}</Link>
-        )))}
-    </div>
-  )
+    ];
+
+    // TEMPORARY
+    const session = true;
+    const isAdmin = true;
+    return (
+        <div className={styles.links}>
+            {links.map((link => (
+                <NavLink item={link} key={link.title} />
+            )))}
+            {
+                session ? (
+                    <>
+                        {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+                        <button className={styles.logout}>Logout</button>
+                    </>
+
+                ) : (
+                    <NavLink item={{title: "Login", path: "/login"}}/>
+            )}
+        </div>
+    )
 }
 
 export default Links
